@@ -1,206 +1,86 @@
 
-  class tratamientoslist {
-        
-    constructor( tratamientos, precio, stock) {
+
+   let tratamientos = [
+    { nombre: "Abrillantado", precio: 20000 },
+    { nombre: "Acrilico", precio: 32000 },
+    { nombre: "Ceramico", precio: 52000 }
+];
 
 
-             this.nombre = tratamientos
-             this.precio = precio
-             this.stock = stock
+function BuscarTratamientos(e){
 
-             }
-                 
-    datoTratamiento() {
+let nombreTratamiento = e.target.textContent;
+let tratamientoSeleccionado = tratamientos.find(tratamiento => tratamiento.nombre === nombreTratamiento);
 
-            console.log("Lista de Tratamientos:");
-            console.log("Tratamiento: ", this.nombre);
-            console.log("Precio: ", this.precio);
-            console.log("Numero de tratamientos disponible: ", this.stock);
-            console.log("<--------------------->");
-        
+    if (tratamientoSeleccionado) {
+         precioTratamiento = tratamientoSeleccionado.precio;
+    } else {
+  
+    precioTratamiento = 0;
+    }
 
-     }
- 
-   get_stock() {
-        if (this.stock <= 0) {
-            return false;
-        }
-        else {
-
-          return true;
-        }
-
-
-   }
-
-
-  }
-
-   let listaTratamientos = []
-
-    listaTratamientos.push( new tratamientoslist("Abrillantado", 20000 , 9) );
-    listaTratamientos.push( new tratamientoslist("Acrilico", 32000 , 5) );
-    listaTratamientos.push( new tratamientoslist("Ceramico", 52000 , 2) );
-
-   /* for (let i = 0; i < 3 ; i = i + 1) {
-           
-         let tratamientos = prompt ("Ingrese el nombre del tratamiento para agregar a la lista")
-         let precio = parseInt(prompt("Precio del tratamiento"));
-         let stock = parseInt(prompt("Numero de tratamientos disponibles"));
-
-
-         let tratamientosAgregado = new tratamientoslist (tratamientos, precio, stock);
-         listaTratamientos.push(tratamientosAgregado);
-   }
-*/
-       
-      for ( let tratamientoss of listaTratamientos ) { 
-
-            tratamientoss.datoTratamiento();
-          
-
-      }
-
-
-
-function BuscarTratamientos( tratamientos ){
-
-    return tratamientos.nombre == tratamiento
-
-       
+calcularCuotaTratamiento();
 
 } 
 
 
 
-function calcularCuotaTratamiento(pago, cuotas) {
+function calcularCuotaTratamiento() {
 
-  cuotas = parseInt(cuotas);
+  let subtotal = precioTratamiento;
+  let cuota;
 
-    if (cuotas == 3) {
-      let cuota = pago * 0.2;
-      return cuota;
-  
-    } else if (cuotas == 6) {
-      let cuota = pago * 0.5;
-      return cuota;
-  
-    } else if (cuotas == 12) {
-      let cuota = pago * 0.8;
-      return cuota;
-  
-    } else if (pagos == "efectivo") {
-      let cuota = pago;
-      return cuota;
-    }
+  if (cuotasSeleccionadas == 3) {
+    cuota = subtotal * 0.2;
+  } else if (cuotasSeleccionadas == 6) {
+    cuota = subtotal * 0.5;
+  } else if (cuotasSeleccionadas == 12) {
+    cuota = subtotal * 0.8;
+  } else {
+    cuota = subtotal / cuotasSeleccionadas;
+  }
+
+  let total = cuota * cuotasSeleccionadas;
+    document.getElementById("subtotal").textContent = subtotal;
+    document.getElementById("cuotaSeleccionada").textContent = cuotasSeleccionadas;
+    document.getElementById("total").textContent = total + subtotal;
+
+
   }
   
-  // ---- PRECIOS DE PRODUCTOS ----- //
-  /*
-  const precio_abrillantado = 20000;
-  const precio_acrilico = 32000;
-  const precio_ceramico = 54000;
-  */
   // ---- VARIABLES ---- //
-  let cuotas = 0;
-  let menu = 0;
-  let pagos = 0;
+  let cuotasSeleccionadas = 0;
+  let precioTratamiento = 0;
   
   console.log("Bienvendios a CarDetaling");
   
-  while (menu != "fin") {
-  
-    
-    // -------------------------------- INGRESO A LA LISTA ---------------------------------- //
-  
+// DOM
+  let btnTratamiento = document.querySelectorAll(".botonTratamiento");
+  let btnPago = document.querySelectorAll(".metodoPago");
+  console.log(btnTratamiento);
+  console.log(btnPago);
 
-    menu = prompt( 'Ingrese "lista" para ver los tratamientos disponibles o "fin" para terminar' );
-  
-      if (menu != "fin") {
-      {
 
-  
-      // --------------------------------- SELECCION DE TRATAMIENTO ----------------------------- //
-      
+
+  //EVENTOS
+  for (let boton of btnTratamiento) {
+    boton.addEventListener("click", BuscarTratamientos);
+}
+
+
+for( let boton of btnPago ){
+
+  boton.addEventListener("click" , () => {
+  cuotasSeleccionadas = parseInt(boton.value);
+  calcularCuotaTratamiento();
+});
+}
  
-        tratamiento = prompt( "Ingrese el nombre del tratamiento para seleccionarlo\n Abrillantado: $20000\n Acrilico: $32000\n Ceramico: $54000" );
-        
-        
-        console.log("Tratamiento seleccionado: " + tratamiento);
-  
-        pagos = prompt("¿Como abonaras?, ¿Tarjeta o Efectivo? ");
-      }
-  
 
-      // ------------------------------------------   EFECTIVO   ---------------------------------------------- //
-  
-     
-      if (pagos == "efectivo" || pagos == "Efectivo") {
-        if (tratamiento == "Abrillantado" || tratamiento == "abrillantado") {
-  
-          console.log( "El precio de tu tratamiento en efectivo es: $" + listaTratamientos.find(BuscarTratamientos).precio) ;
-  
-        }
-  
-        else if (tratamiento == "Acrilico" || tratamiento == "acrilico") {
-  
-          console.log( "El precio de tu tratamiento en efectivo es: $",listaTratamientos.find(BuscarTratamientos).precio) ;
-  
-        }
-  
-        else if (tratamiento == "Ceramico" || tratamiento == "ceramico") {
-  
-          console.log( "El precio de tu tratamiento en efectivo es: $",listaTratamientos.find(BuscarTratamientos).precio) ;
-  
-        }
-  
-      }
-  
-
-      // ------------------------------------------- TARJETA -------------------------------------------- //
-  
-      else if (pagos == "tarjeta" || pagos == "Tarjeta" ) {
-  
-        
-        cuotas = prompt("En cuantas cuotas desea abonar: 3, 6 o 12 ?");
-  
-        if (tratamiento == "Abrillantado" || tratamiento == "abrillantado") {
-          let precioTratamiento = listaTratamientos.find(BuscarTratamientos).precio;
-          let cuota = calcularCuotaTratamiento(precioTratamiento, cuotas);
-          let precioFinal = precioTratamiento + cuota;
-          
-          console.log( "El precio final en",cuotas,"cuotas es $", precioFinal);
-          console.log( "El precio de cada cuota es: $", cuota);
-  
-        }
-  
-        else if (tratamiento == "Acrilico" || tratamiento == "acrilico") {
-
-          let precioTratamiento = listaTratamientos.find(BuscarTratamientos).precio;
-          let cuota = calcularCuotaTratamiento(precioTratamiento, cuotas);
-          let precioFinal = precioTratamiento + cuota;
-
-          console.log( "El precio final en",cuotas,"cuotas es $", precioFinal);
-          console.log( "El precio de cada cuota es: $", cuota);
-  
-        }
-  
-        else if (tratamiento == "Ceramico" || tratamiento == "ceramico") {
-
-          let precioTratamiento = listaTratamientos.find(BuscarTratamientos).precio;
-          let cuota = calcularCuotaTratamiento(precioTratamiento, cuotas);
-          let precioFinal = precioTratamiento + cuota;
-
-          console.log( "El precio final en",cuotas,"cuotas es $", precioFinal);
-          console.log( "El precio de cada cuota es: $", cuota);
-  
-        }
-      }
-    }
-  
-
-    // ----------------------------------------------- FIN ----------------------------------------------- //
-  else {
-        console.log("Refresque la pagina para comenzar a comprar");
-    }
+document.getElementById("ImpTicket").addEventListener("click", () => {
+  if (precioTratamiento > 0) {
+      alert(`Ticket de compra:\nTratamiento: ${precioTratamiento}\nCuotas: ${cuotasSeleccionadas}\nTotal: $${document.getElementById("total").textContent}`);
+  } else {
+      alert("Seleccione un tratamiento antes de imprimir el ticket.");
   }
+ });
